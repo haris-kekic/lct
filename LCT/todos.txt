@@ -1,0 +1,4 @@
+﻿1. Visitor for Comprehensions
+2. Error Handling (Parser)
+3. Remove defined lists
+4. Make string manipulation possible
