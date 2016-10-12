@@ -51,7 +51,10 @@ listManualList
 ;
 
 listAutoList
-: ELEMENT? SPAN ELEMENT?
+: 
+	ELEMENT SPAN ELEMENT	#AutoLimitedList
+	| ELEMENT SPAN			#AutoLeftLimited
+	| SPAN ELEMENT			#AutoRightLimited
 ;
 
 /*

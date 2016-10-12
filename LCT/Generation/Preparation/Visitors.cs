@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 
 namespace LCT.Generation.Preparation
 {
+    //TODO: Handle Errors
+
     internal class StatementVisitor : LCTGrammarBaseVisitor<Statement>
     {
         public override Statement VisitListShowStatement(LCTGrammarParser.ListShowStatementContext context)
@@ -42,7 +44,7 @@ namespace LCT.Generation.Preparation
         public override LctUniqueList VisitListDefinitions(LCTGrammarParser.ListDefinitionsContext context)
         {
             LctUniqueList lists = new LctUniqueList();
-            foreach(var ld in context.list())
+            foreach (var ld in context.list())
             {
                 LctListVisitor visitor = new LctListVisitor();
                 lists.AddOrReplace(visitor.Visit(ld));
@@ -72,7 +74,7 @@ namespace LCT.Generation.Preparation
         {
             LCTList lctList = new LCTList();
 
-            foreach(var element in context.ELEMENT())
+            foreach (var element in context.ELEMENT())
             {
                 decimal decVal = 0m;
                 if (decimal.TryParse(element.GetText(), out decVal))
@@ -84,33 +86,56 @@ namespace LCT.Generation.Preparation
                     lctList.Elements.Add(element.GetText());
                 }
             }
-            
+
             return lctList;
         }
 
-        public override LCTList VisitListAutoList(LCTGrammarParser.ListAutoListContext context)
+        public override LCTList VisitAutoLimitedList(LCTGrammarParser.AutoLimitedListContext context)
         {
+            //TODO: Handle Errors
             LCTList lctList = new LCTList();
 
-            if (context.ELEMENT(0) != null && context.ELEMENT(1) != null)
+            decimal fromVal = 0m;
+            decimal toVal = 0m;
+            decimal.TryParse(context.ELEMENT(0).GetText(), out fromVal);
+            decimal.TryParse(context.ELEMENT(1).GetText(), out toVal);
+
+            for (decimal i = fromVal; i <= toVal; i++)
             {
-                decimal fromVal = 0m;
-                decimal toVal = 0m;
+                lctList.Elements.Add(i);
+            }
 
-                decimal.TryParse(context.ELEMENT(0).GetText(), out fromVal);
-                {
+            return lctList;
+        }
 
-                }
-                
-                if (decimal.TryParse(context.ELEMENT(1).GetText(), out toVal))
-                {
+        public override LCTList VisitAutoLeftLimited(LCTGrammarParser.AutoLeftLimitedContext context)
+        {
+            //TODO: Handle Errors
+            LCTList lctList = new LCTList();
 
-                }
+            decimal fromVal = 0m;
+            decimal.TryParse(context.ELEMENT().GetText(), out fromVal);
 
-                for (decimal i = fromVal; i <= toVal; i++)
-                {
-                    lctList.Elements.Add(i);
-                }
+            for (decimal i = fromVal; i <= Int16.MaxValue; i++)
+            {
+                lctList.Elements.Add(i);
+            }
+
+            return lctList;
+        }
+
+        
+        public override LCTList VisitAutoRightLimited(LCTGrammarParser.AutoRightLimitedContext context)
+        {
+            //TODO: Handle Errors
+            LCTList lctList = new LCTList();
+            
+            decimal toVal = 0m;
+            decimal.TryParse(context.ELEMENT().GetText(), out toVal);
+
+            for (decimal i = Int16.MinValue; i <= toVal; i++)
+            {
+                lctList.Elements.Add(i);
             }
 
             return lctList;

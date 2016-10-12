@@ -45,14 +45,37 @@ namespace LCT.Tests
         }
 
         [TestMethod]
-        public void Statement_DefineLists_AutLists_Test()
+        public void Statement_DefineLists_AutListsLimited_Test()
         {
             TestExecEnvironment2 execEnvironment = new TestExecEnvironment2();
 
-            string inputStatement = "def autoList <- [1..9]";
+            string inputStatement = "def autoList <- [1..10]";
             string outputText = execEnvironment.Execute(inputStatement);
 
-            Assert.AreEqual(9, execEnvironment.Lists.ElementAt(0).Elements.Count);
+            Assert.AreEqual(10, execEnvironment.Lists.ElementAt(0).Elements.Count);
+            Assert.AreEqual(6m, execEnvironment.Lists.ElementAt(0).Elements[5]);
+        }
+
+        [TestMethod]
+        public void Statement_DefineLists_AutListsLeftUnlimted_Test()
+        {
+            TestExecEnvironment2 execEnvironment = new TestExecEnvironment2();
+
+            string inputStatement = "def autoList <- [..10]";
+            string outputText = execEnvironment.Execute(inputStatement);
+
+            Assert.AreEqual(Convert.ToDecimal(Int16.MinValue), execEnvironment.Lists.ElementAt(0).Elements.FirstOrDefault());
+        }
+
+        [TestMethod]
+        public void Statement_DefineLists_AutListsRightUnlimted_Test()
+        {
+            TestExecEnvironment2 execEnvironment = new TestExecEnvironment2();
+
+            string inputStatement = "def autoList <- [..]";
+            string outputText = execEnvironment.Execute(inputStatement);
+
+            Assert.AreEqual(Convert.ToDecimal(Int16.MaxValue), execEnvironment.Lists.ElementAt(0).Elements.LastOrDefault());
         }
 
         [TestMethod]
