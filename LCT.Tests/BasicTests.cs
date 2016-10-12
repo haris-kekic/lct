@@ -13,7 +13,7 @@ namespace LCT.Tests
     public class BasicTests
     {
         [TestMethod]
-        public void StatementDefineListsTest()
+        public void Statement_DefineLists_Test()
         {
             string inputStatement = "def x <- [1,2,4], y <- [0,1,2,9,8]";
             Analyzer analyser = new Analyzer(inputStatement);
@@ -34,7 +34,7 @@ namespace LCT.Tests
         }
 
         [TestMethod]
-        public void ExecEnvironmentInMemoryDefinedListTest()
+        public void ExecEnvironment_InMemoryDefinedList_Test()
         {
             TestExecEnvironment execEnvironment = new TestExecEnvironment();
 
@@ -55,7 +55,7 @@ namespace LCT.Tests
         }
 
         [TestMethod]
-        public void ExecEnvironmentInMemoryDefinedListOverwriteTest()
+        public void ExecEnvironment_InMemory_DefinedList_Overwrite_Test()
         {
             TestExecEnvironment execEnvironment = new TestExecEnvironment();
 
