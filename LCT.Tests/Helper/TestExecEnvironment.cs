@@ -9,13 +9,11 @@ namespace LCT.Tests.Helper
 {
     public class TestExecEnvironment : ExecEnvironment
     {
-        public string OutputText { get; private set; }
-
         public List<LCTList> Lists { get; private set; }
 
-        protected override void Output(string outputText)
+        protected override string Output(Statement statement)
         {
-            this.OutputText = outputText;
+            string standardtOutput = base.Output(statement);
 
             this.Lists = new List<LCTList>();
 
@@ -23,6 +21,27 @@ namespace LCT.Tests.Helper
             {
                 this.Lists.Add(list);
             }
+
+            return standardtOutput;
+        }
+    }
+
+    public class TestExecEnvironment2 : ExecEnvironment
+    {
+        public List<LCTList> Lists { get; private set; }
+
+        protected override string Output(Statement statement)
+        {
+            string standardtOutput = base.Output(statement);
+
+            this.Lists = new List<LCTList>();
+
+            foreach (var list in statement.ListDefinitions)
+            {
+                this.Lists.Add(list);
+            }
+
+            return standardtOutput;
         }
     }
 }

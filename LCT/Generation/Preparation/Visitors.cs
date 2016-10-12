@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace LCT.Generation.Preparation
 {
-    public class StatementVisitor : LCTGrammarBaseVisitor<Statement>
+    internal class StatementVisitor : LCTGrammarBaseVisitor<Statement>
     {
         public override Statement VisitListShowStatement(LCTGrammarParser.ListShowStatementContext context)
         {
@@ -27,7 +27,7 @@ namespace LCT.Generation.Preparation
         }
     }
 
-    public class ListsShowVisitor : LCTGrammarBaseVisitor<ListsShow>
+    internal class ListsShowVisitor : LCTGrammarBaseVisitor<ListsShow>
     {
         public override ListsShow VisitListShowStatement(LCTGrammarParser.ListShowStatementContext context)
         {
@@ -37,7 +37,7 @@ namespace LCT.Generation.Preparation
         }
     }
 
-    public class ListDefinitionsVisitor : LCTGrammarBaseVisitor<LctUniqueList>
+    internal class ListDefinitionsVisitor : LCTGrammarBaseVisitor<LctUniqueList>
     {
         public override LctUniqueList VisitListDefinitions(LCTGrammarParser.ListDefinitionsContext context)
         {
@@ -51,7 +51,7 @@ namespace LCT.Generation.Preparation
         }
     }
 
-    public class LctListVisitor : LCTGrammarBaseVisitor<LCTList>
+    internal class LctListVisitor : LCTGrammarBaseVisitor<LCTList>
     {
         public override LCTList VisitList(LCTGrammarParser.ListContext context)
         {
@@ -85,6 +85,34 @@ namespace LCT.Generation.Preparation
                 }
             }
             
+            return lctList;
+        }
+
+        public override LCTList VisitListAutoList(LCTGrammarParser.ListAutoListContext context)
+        {
+            LCTList lctList = new LCTList();
+
+            if (context.ELEMENT(0) != null && context.ELEMENT(1) != null)
+            {
+                decimal fromVal = 0m;
+                decimal toVal = 0m;
+
+                decimal.TryParse(context.ELEMENT(0).GetText(), out fromVal);
+                {
+
+                }
+                
+                if (decimal.TryParse(context.ELEMENT(1).GetText(), out toVal))
+                {
+
+                }
+
+                for (decimal i = fromVal; i <= toVal; i++)
+                {
+                    lctList.Elements.Add(i);
+                }
+            }
+
             return lctList;
         }
     }

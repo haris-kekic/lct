@@ -24,7 +24,7 @@ namespace LCT
 
         protected LctUniqueList DefinedLists { get; set; }
 
-        public void Execute(string inputStatement)
+        public string Execute(string inputStatement)
         {
             string outputText = string.Empty;
 
@@ -33,9 +33,21 @@ namespace LCT
             Generator generator = new Generator(parseTree);
             Statement statement = generator.Evaluate();
 
+            return this.Output(statement);
+        }
+
+        /// <summary>
+        /// This method can be overridden to handle the translation and output for target environment in a custom way
+        /// </summary>
+        /// <param name="statement">Parsed and prepared Statement object</param>
+        /// <returns></returns>
+        virtual protected string Output(Statement statement)
+        {
+            string outputText = string.Empty;
+
             if (statement.ListDefinitions != null)
             {
-                foreach(var list in statement.ListDefinitions)
+                foreach (var list in statement.ListDefinitions)
                 {
                     this.DefinedLists.AddOrReplace(list);
                 }
@@ -45,14 +57,8 @@ namespace LCT
                 outputText = OutputDefinedLists();
             }
 
-            this.Output(outputText);
+            return outputText;
         }
-
-        /// <summary>
-        /// Output can be overriden for different environments
-        /// </summary>
-        /// <param name="outputText"></param>
-        abstract protected void Output(string outputText);
 
         /// <summary>
         /// String representation can be overridden
@@ -76,12 +82,13 @@ namespace LCT
         }
     }
 
-
     public class  ConsoleExecEnvironment : ExecEnvironment
     {
-        protected override void Output(string outputText)
+        protected override string Output(Statement statement)
         {
-            Console.WriteLine(outputText);
+            string standardOutput = base.Output(statement);
+            Console.Write(standardOutput);
+            return standardOutput;
         }
     }
 }

@@ -4,7 +4,7 @@ using LCT.Generation.Preparation.Intermediate;
 
 namespace LCT.Generation
 {
-    public class Generator
+    internal class Generator
     {
         public Generator(IParseTree parseTree)
         {

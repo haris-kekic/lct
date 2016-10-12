@@ -8,11 +8,9 @@ using System.Threading.Tasks;
 
 namespace LCT.Analysis
 {
-    public class Analyzer
+    internal class Analyzer
     {
         private string inputStatement;
-
-        
 
         public Analyzer(string inputStatement)
         {

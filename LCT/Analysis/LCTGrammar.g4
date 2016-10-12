@@ -47,7 +47,7 @@ listElements
 ;
 
 listManualList
-: ELEMENT (COMMA ELEMENT)*
+: ELEMENT? (COMMA ELEMENT)*
 ;
 
 listAutoList
