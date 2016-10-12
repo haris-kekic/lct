@@ -34,6 +34,12 @@ namespace LCT
                 Console.WriteLine();
                 Console.Write("LCT>");
                 string inputStatement = Console.ReadLine();
+
+                if (inputStatement.Equals("quit", StringComparison.CurrentCultureIgnoreCase))
+                {
+                    break;
+                }
+
                 execEnvironment.Execute(inputStatement);
             } while (true);
 
