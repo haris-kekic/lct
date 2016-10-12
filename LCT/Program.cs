@@ -13,6 +13,7 @@ namespace LCT
 {
     class Program
     {
+        //TODO: Error Handling (Parser), Visitor for Comprehensions
         static void Main(string[] args)
         {
             var exitEvent = new ManualResetEvent(false);
