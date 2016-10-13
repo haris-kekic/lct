@@ -13,6 +13,6 @@ namespace LCT.Generation.Preparation.Intermediate
 
         public LctUniqueList ListDefinitions { get; set; }
 
-        public ListComprehension Comprehension { get; set; }
+        public ListComprehension ListComprehension { get; set; }
     }  
 }

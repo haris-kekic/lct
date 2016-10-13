@@ -68,17 +68,6 @@ namespace LCT.Tests
         }
 
         [TestMethod]
-        public void Statement_DefineLists_AutListsRightUnlimted_Test()
-        {
-            TestExecEnvironment2 execEnvironment = new TestExecEnvironment2();
-
-            string inputStatement = "def autoList <- [..]";
-            string outputText = execEnvironment.Execute(inputStatement);
-
-            Assert.AreEqual(Convert.ToDecimal(Int16.MaxValue), execEnvironment.Lists.ElementAt(0).Elements.LastOrDefault());
-        }
-
-        [TestMethod]
         public void ExecEnvironment_InMemoryDefinedList_Test()
         {
             TestExecEnvironment execEnvironment = new TestExecEnvironment();
@@ -113,6 +102,41 @@ namespace LCT.Tests
             Assert.AreEqual(5, execEnvironment.Lists.ElementAt(0).Elements.Count);
             CollectionAssert.Contains(execEnvironment.Lists.ElementAt(0).Elements, 0m);
             CollectionAssert.Contains(execEnvironment.Lists.ElementAt(0).Elements, 8m);
+        }
+
+        [TestMethod]
+        public void Statement_ListComprehension_IsNotNull_Test()
+        {
+            TestExecEnvironment3 execEnvironment = new TestExecEnvironment3();
+
+            string inputStatement = "[x | x <- [1,2,4,3], y <- [0,1,2,9,7,6]]";
+            string outputText = execEnvironment.Execute(inputStatement);
+
+            Assert.IsNotNull(execEnvironment.Statement.ListComprehension);
+        }
+
+        [TestMethod]
+        public void Statement_ListComprehension_ListsDefined_Test()
+        {
+            TestExecEnvironment3 execEnvironment = new TestExecEnvironment3();
+
+            string inputStatement = "[x | x <- [1,2,5,6], y <- [0,1,2,9,3], z <- []]";
+            string outputText = execEnvironment.Execute(inputStatement);
+
+            Assert.AreEqual(3, execEnvironment.Statement.ListComprehension.ListDefinitions.Count);
+            Assert.AreEqual("y" , execEnvironment.Statement.ListComprehension.ListDefinitions.ElementAt(1).Name);
+            Assert.AreEqual(9m, execEnvironment.Statement.ListComprehension.ListDefinitions.ElementAt(1).Elements[3]);
+        }
+
+        [TestMethod]
+        public void Statement_ListComprehension_ArithExpressionContext_IsNotNull_Test()
+        {
+            TestExecEnvironment3 execEnvironment = new TestExecEnvironment3();
+
+            string inputStatement = "[x | x <- [1,2,4,3], y <- [0,1,2,9,7,6]]";
+            string outputText = execEnvironment.Execute(inputStatement);
+
+            Assert.IsNotNull(execEnvironment.Statement.ListComprehension.ArithmeticExpresssionContext);
         }
     }
 }

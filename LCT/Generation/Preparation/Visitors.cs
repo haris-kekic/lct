@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 namespace LCT.Generation.Preparation
 {
     //TODO: Handle Errors
-
     internal class StatementVisitor : LCTGrammarBaseVisitor<Statement>
     {
         public override Statement VisitListShowStatement(LCTGrammarParser.ListShowStatementContext context)
@@ -27,6 +26,104 @@ namespace LCT.Generation.Preparation
             statement.ListDefinitions = context.Accept<LctUniqueList>(new ListDefinitionsVisitor());
             return statement;
         }
+
+        public override Statement VisitListComprehensionStatement(LCTGrammarParser.ListComprehensionStatementContext context)
+        {
+            Statement statement = new Statement();
+            statement.ListComprehension = context.Accept<ListComprehension>(new ListComprehensionVisitor());
+            return statement;
+        }
+    }
+
+    internal class ListComprehensionVisitor : LCTGrammarBaseVisitor<ListComprehension>
+    {
+        public override ListComprehension VisitListComprehensionStatement(LCTGrammarParser.ListComprehensionStatementContext context)
+        {
+            ListComprehension comprehension = new ListComprehension();
+            comprehension.ListDefinitions = new ListDefinitionsVisitor().Visit(context.listDefinitions());
+            comprehension.ArithmeticExpresssionContext = context.listArithExpression();
+            return comprehension;
+        }
+    }
+
+    public class ArithmeticCalculationVisitor : LCTGrammarBaseVisitor<decimal>
+    {
+        public Dictionary<string, decimal> Variables { get; set; }
+
+        public ArithmeticCalculationVisitor()
+            : base()
+        {
+            this.Variables = new Dictionary<string, decimal>();
+        }
+
+        public ArithmeticCalculationVisitor(Dictionary<string, decimal> variables)
+            : base()
+        {
+            this.Variables = variables;
+        }
+
+        public override decimal VisitListArithExpression(LCTGrammarParser.ListArithExpressionContext context)
+        {
+            return base.Visit(context.arithExpression());
+        }
+
+        public override decimal VisitPower(LCTGrammarParser.PowerContext context)
+        {
+            return (decimal)Math.Pow((double)base.Visit(context.arithExpression(0)), (double)base.Visit(context.arithExpression(1)));
+        }
+
+        public override decimal VisitMulDiv(LCTGrammarParser.MulDivContext context)
+        {
+            if (context.MUL() != null)
+            {
+                return base.Visit(context.arithExpression(0)) * base.Visit(context.arithExpression(1));
+            }
+
+            else
+            {
+                return base.Visit(context.arithExpression(0)) / base.Visit(context.arithExpression(1));
+            }
+        }
+
+        public override decimal VisitAddSub(LCTGrammarParser.AddSubContext context)
+        {
+            if (context.ADD() != null)
+            {
+                return base.Visit(context.arithExpression(0)) + base.Visit(context.arithExpression(1));
+            }
+
+            else
+            {
+                return base.Visit(context.arithExpression(0)) - base.Visit(context.arithExpression(1));
+            }
+        }
+
+        public override decimal VisitPar(LCTGrammarParser.ParContext context)
+        {
+            return base.Visit(context.arithExpression());
+        }
+
+        public override decimal VisitNum(LCTGrammarParser.NumContext context)
+        {
+            decimal result = 0m;
+            decimal.TryParse(context.NUMBER().GetText(), out result);
+
+            return result;
+        }
+
+        public override decimal VisitVar(LCTGrammarParser.VarContext context)
+        {
+            string varName = context.IDENTIFIER().GetText();
+            decimal result = 0m;
+
+            if (this.Variables.ContainsKey(varName))
+            {
+                result = this.Variables[varName];
+            }
+
+            return result;
+        }
+
     }
 
     internal class ListsShowVisitor : LCTGrammarBaseVisitor<ListsShow>
@@ -46,8 +143,7 @@ namespace LCT.Generation.Preparation
             LctUniqueList lists = new LctUniqueList();
             foreach (var ld in context.list())
             {
-                LctListVisitor visitor = new LctListVisitor();
-                lists.AddOrReplace(visitor.Visit(ld));
+                lists.AddOrReplace(new LctListVisitor().Visit(ld));
             }
             return lists;
         }
@@ -124,12 +220,12 @@ namespace LCT.Generation.Preparation
             return lctList;
         }
 
-        
+
         public override LCTList VisitAutoRightLimited(LCTGrammarParser.AutoRightLimitedContext context)
         {
             //TODO: Handle Errors
             LCTList lctList = new LCTList();
-            
+
             decimal toVal = 0m;
             decimal.TryParse(context.ELEMENT().GetText(), out toVal);
 

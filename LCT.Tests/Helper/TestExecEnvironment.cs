@@ -44,4 +44,15 @@ namespace LCT.Tests.Helper
             return standardtOutput;
         }
     }
+
+    public class TestExecEnvironment3 : ExecEnvironment
+    {
+        public Statement Statement { get; private set; }
+
+        protected override string Output(Statement statement)
+        {
+            this.Statement = statement;
+            return base.Output(statement);
+        }
+    }
 }
