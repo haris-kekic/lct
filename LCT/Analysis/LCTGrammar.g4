@@ -47,7 +47,7 @@ listElements
 ;
 
 listManualList
-: ELEMENT? (COMMA ELEMENT)*
+: ELEMENT (COMMA ELEMENT)*
 ;
 
 listAutoList
@@ -104,8 +104,11 @@ listAutoList
  : ']'
  ;
 
+ /*
+ * Will be extended to other types as well
+ */
  ELEMENT :
-  NUMBER;
+  NUMBER; 
 
  NUMBER
  : DIGIT+ ('.' DIGIT+)?

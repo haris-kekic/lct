@@ -1,7 +1,7 @@
 ﻿using Antlr4.Runtime.Tree;
 using LCT.Analysis;
 using LCT.Generation.Preparation.Intermediate;
-using LCT.Helper;
+using LCT.Library;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -62,7 +62,9 @@
     <Compile Include="Generation\Preparation\Intermediate\ListsShow.cs" />
     <Compile Include="Generation\Preparation\Intermediate\Statement.cs" />
     <Compile Include="Generation\Preparation\Visitors.cs" />
-    <Compile Include="Helper\LctUniqueList.cs" />
+    <Compile Include="Library\DictionaryCombinationsComparer.cs" />
+    <Compile Include="Library\Extensions\DictionaryExtensions.cs" />
+    <Compile Include="Library\LctUniqueList.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
