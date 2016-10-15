@@ -19,5 +19,7 @@ namespace LCT.Generation.Preparation.Intermediate
         public string Name { get; set; }
 
         public List<object> Elements { get; set; }
+
+        public string Reference { get; set; }
     }
 }

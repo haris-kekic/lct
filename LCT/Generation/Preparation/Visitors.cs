@@ -107,7 +107,6 @@ namespace LCT.Generation.Preparation
         {
             decimal result = 0m;
             decimal.TryParse(context.NUMBER().GetText(), out result);
-
             return result;
         }
 
@@ -123,7 +122,6 @@ namespace LCT.Generation.Preparation
 
             return result;
         }
-
     }
 
     internal class ListsShowVisitor : LCTGrammarBaseVisitor<ListsShow>
@@ -153,8 +151,9 @@ namespace LCT.Generation.Preparation
     {
         public override LCTList VisitList(LCTGrammarParser.ListContext context)
         {
-            LCTList lctList = this.Visit(context.listElements());
+            LCTList lctList = context.listElements() != null ? this.Visit(context.listElements()) : new LCTList();
             lctList.Name = context.IDENTIFIER(0).GetText();
+            lctList.Reference = context.IDENTIFIER(1) != null ? context.IDENTIFIER(1).GetText() : string.Empty;
             return lctList;
         }
 
@@ -162,15 +161,17 @@ namespace LCT.Generation.Preparation
         {
             if (context.listManualList() != null)
                 return this.Visit(context.listManualList());
-            else
+            else if (context.listAutoList() != null)
                 return this.Visit(context.listAutoList());
+            else
+                return new LCTList(); //Empty list
         }
 
         public override LCTList VisitListManualList(LCTGrammarParser.ListManualListContext context)
         {
             LCTList lctList = new LCTList();
 
-            foreach (var element in context.ELEMENT())
+            foreach (var element in context.NUMBER())
             {
                 decimal decVal = 0m;
                 if (decimal.TryParse(element.GetText(), out decVal))
@@ -193,8 +194,8 @@ namespace LCT.Generation.Preparation
 
             decimal fromVal = 0m;
             decimal toVal = 0m;
-            decimal.TryParse(context.ELEMENT(0).GetText(), out fromVal);
-            decimal.TryParse(context.ELEMENT(1).GetText(), out toVal);
+            decimal.TryParse(context.NUMBER(0).GetText(), out fromVal);
+            decimal.TryParse(context.NUMBER(1).GetText(), out toVal);
 
             for (decimal i = fromVal; i <= toVal; i++)
             {
@@ -210,7 +211,7 @@ namespace LCT.Generation.Preparation
             LCTList lctList = new LCTList();
 
             decimal fromVal = 0m;
-            decimal.TryParse(context.ELEMENT().GetText(), out fromVal);
+            decimal.TryParse(context.NUMBER().GetText(), out fromVal);
 
             for (decimal i = fromVal; i <= Int16.MaxValue; i++)
             {
@@ -227,7 +228,7 @@ namespace LCT.Generation.Preparation
             LCTList lctList = new LCTList();
 
             decimal toVal = 0m;
-            decimal.TryParse(context.ELEMENT().GetText(), out toVal);
+            decimal.TryParse(context.NUMBER().GetText(), out toVal);
 
             for (decimal i = Int16.MinValue; i <= toVal; i++)
             {

@@ -17,7 +17,7 @@ namespace LCT.Tests.Helper
 
             this.Lists = new List<LCTList>();
 
-            foreach(var list in base.DefinedLists)
+            foreach(var list in base.InMemoryDefinedLists)
             {
                 this.Lists.Add(list);
             }

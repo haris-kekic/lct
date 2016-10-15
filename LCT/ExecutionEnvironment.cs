@@ -21,10 +21,10 @@ namespace LCT
     {
         public ExecEnvironment()
         {
-            DefinedLists = new LctUniqueList();
+            InMemoryDefinedLists = new LctUniqueList();
         }
 
-        protected LctUniqueList DefinedLists { get; set; }
+        protected LctUniqueList InMemoryDefinedLists { get; set; }
 
         public string Execute(string inputStatement)
         {
@@ -32,10 +32,10 @@ namespace LCT
 
             Analyzer analyser = new Analyzer(inputStatement);
             IParseTree parseTree = analyser.Analyse();
-            //Generator generator = new Generator(parseTree);
-            //Statement statement = generator.Evaluate();
+            Generator generator = new Generator(parseTree);
+            Statement statement = generator.Evaluate();
 
-            return this.Output(new Statement());
+            return this.Output(statement);
         }
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace LCT
             {
                 foreach (var list in statement.ListDefinitions)
                 {
-                    this.DefinedLists.AddOrReplace(list);
+                    this.InMemoryDefinedLists.AddOrReplace(list);
                 }
             }
             else if (statement.ListsShow != null)
@@ -64,13 +64,13 @@ namespace LCT
                 {
                     List<object> results = new List<object>();
 
+                    this.ResolveListReferences(statement.ListComprehension.ListDefinitions);
+
                     List<Dictionary<string, object>> combinations = statement.ListComprehension.ListDefinitions.GenerateListElementCombinations();
                     foreach (var combination in combinations)
                     {
-                       
-                            Dictionary<string, decimal> decimalCombination = combination.ToDecimalDictionary();
-                            results.Add(new ArithmeticCalculationVisitor(decimalCombination).Visit(statement.ListComprehension.ArithmeticExpresssionContext));
-                        
+                        Dictionary<string, decimal> decimalCombination = combination.ToDecimalDictionary();
+                        results.Add(new ArithmeticCalculationVisitor(decimalCombination).Visit(statement.ListComprehension.ArithmeticExpresssionContext));
                     }
 
                     outputText = this.OutputList(results);
@@ -78,6 +78,16 @@ namespace LCT
             }
 
             return outputText;
+        }
+
+        private void ResolveListReferences(LctUniqueList comprehensionLists)
+        {
+            /// Iterate through all defined lists in comprehension that have a reference to a list defined before in memory
+            /// then refer the elements of the in memory object to the comprehension defined list
+            comprehensionLists.Where(cl => !string.IsNullOrEmpty(cl.Reference)).ToList()
+                .ForEach(cl =>
+                    cl.Elements = (this.InMemoryDefinedLists.FirstOrDefault(dl => dl.Name.Equals(cl.Reference)) != null ? this.InMemoryDefinedLists.FirstOrDefault(dl => dl.Name.Equals(cl.Reference)).Elements : null));
+
         }
 
         /// <summary>
@@ -89,7 +99,7 @@ namespace LCT
         {
             StringBuilder outputBuilder = new StringBuilder();
 
-            foreach (var list in this.DefinedLists)
+            foreach (var list in this.InMemoryDefinedLists)
             {
                 outputBuilder.Append(list.Name);
                 outputBuilder.Append(" = [");

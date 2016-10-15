@@ -30,9 +30,9 @@ listLogicExpression : logicExpression;
 
 arithExpression : arithExpression POW<assoc=right> arithExpression #Power	
 				| arithExpression ( MUL | DIV ) arithExpression			 #MulDiv	    
-				| arithExpression  ( ADD | SUB ) arithExpression	     #AddSub		    
-				| IDENTIFIER										     #Var
-				| NUMBER												 #Num														
+				| arithExpression  ( ADD | SUB ) arithExpression	     #AddSub
+				| NUMBER												 #Num		    
+				| IDENTIFIER										     #Var													
 				| LP arithExpression RP								     #Par	
 				;
 
@@ -47,14 +47,14 @@ listElements
 ;
 
 listManualList
-: ELEMENT (COMMA ELEMENT)*
+: NUMBER (COMMA NUMBER)*
 ;
 
 listAutoList
 : 
-	ELEMENT SPAN ELEMENT	#AutoLimitedList
-	| ELEMENT SPAN			#AutoLeftLimited
-	| SPAN ELEMENT			#AutoRightLimited
+	NUMBER SPAN NUMBER	#AutoLimitedList
+	| NUMBER SPAN			#AutoLeftLimited
+	| SPAN NUMBER			#AutoRightLimited
 ;
 
 /*
@@ -104,15 +104,16 @@ listAutoList
  : ']'
  ;
 
+ 
+
  /*
  * Will be extended to other types as well
  */
- ELEMENT :
-  NUMBER; 
-
  NUMBER
  : DIGIT+ ('.' DIGIT+)?
- ;
+ ; 
+
+ STRING : '"' ('""'|~'"')* '"' ;
 
  ELEMENT_OF
  : '<-'
