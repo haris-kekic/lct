@@ -31,10 +31,12 @@ namespace LCT.Translation
 
                 if (statement.ListDefinitions != null)
                 {
+                    this.ResolveListReferencesFromInMemoryDefined(appMemory, statement.ListDefinitions);
+
                     foreach (var list in statement.ListDefinitions)
                     {
                         appMemory.DefinedLists.Add(list);
-                    }
+                    } 
                 }
                 else if (statement.ListsShow != null)
                 {
@@ -46,7 +48,7 @@ namespace LCT.Translation
                     {
                         List<object> results = new List<object>();
 
-                        this.ResolveListReferences(appMemory, statement.ListComprehension.ListDefinitions);
+                        this.ResolveListReferencesFromInMemoryDefined(appMemory, statement.ListComprehension.ListDefinitions);
 
                         List<Dictionary<string, object>> combinations = statement.ListComprehension.ListDefinitions.GenerateListElementCombinations();
                         foreach (var combination in combinations)
@@ -93,11 +95,11 @@ namespace LCT.Translation
             return outputBuilder.ToString();
         }
 
-        private void ResolveListReferences(Memory appMemory, LctUniqueList comprehensionLists)
+        private void ResolveListReferencesFromInMemoryDefined(Memory appMemory, LctUniqueList newDefinedList)
         {
             /// Iterate through all defined lists in comprehension that have a reference to a list defined before in memory
             /// then refer the elements of the in memory object to the comprehension defined list
-            comprehensionLists.Where(cl => !string.IsNullOrEmpty(cl.Reference)).ToList()
+            newDefinedList.Where(cl => !string.IsNullOrEmpty(cl.Reference)).ToList()
                 .ForEach(cl =>
                     cl.Elements = (appMemory.DefinedLists.FirstOrDefault(dl => dl.Name.Equals(cl.Reference)) != null ? appMemory.DefinedLists.FirstOrDefault(dl => dl.Name.Equals(cl.Reference)).Elements : null));
 
