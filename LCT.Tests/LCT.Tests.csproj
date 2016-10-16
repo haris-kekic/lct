@@ -60,6 +60,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Generator_Statements_Test.cs" />
     <Compile Include="Lists_Test.cs" />
+    <Compile Include="DefaultInterpreter_Test.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LCT\LCT.csproj">

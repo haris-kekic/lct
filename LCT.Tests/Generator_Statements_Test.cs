@@ -35,6 +35,25 @@ namespace LCT.Tests
         }
 
         [TestMethod]
+        public void Statement_DefiningLists_Statement_ListComprehension_IsNull_Test()
+        {
+            string inputText = "def x <- [1,2,4], y <- [0,1,2,9,8]";
+
+            Statement statement = this.GenerateStatement(inputText);
+
+            Assert.IsNull(statement.ListComprehension);
+        }
+
+        [TestMethod]
+        public void Statement_DefiningLists_Statement_ListShow_IsNull_Test()
+        {
+            string inputText = "def x <- [1,2,4], y <- [0,1,2,9,8]";
+            Statement statement = this.GenerateStatement(inputText);
+
+            Assert.IsNull(statement.ListsShow);
+        }
+
+        [TestMethod]
         public void Statement_DefiningLists_Count_Test()
         {
             string inputText = "def x <- [1,2,4], y <- [0,1,2,9,8]";
@@ -85,6 +104,34 @@ namespace LCT.Tests
         }
 
         [TestMethod]
+        public void Statement_ListsShow_IsNotNull_Test()
+        {
+            string inputText = "show";
+            Statement statement = this.GenerateStatement(inputText);
+
+            Assert.IsNotNull(statement.ListsShow);
+        }
+
+        [TestMethod]
+        public void Statement_ListsShow_Statement_ListComprehension_IsNull_Test()
+        {
+            string inputText = "show";
+            Statement statement = this.GenerateStatement(inputText);
+
+            Assert.IsNull(statement.ListComprehension);
+
+        }
+
+        [TestMethod]
+        public void Statement_ListsShow_Statement_ListDefinitions_IsNull_Test()
+        {
+            string inputText = "show";
+            Statement statement = this.GenerateStatement(inputText);
+
+            Assert.IsNull(statement.ListDefinitions);
+        }
+
+        [TestMethod]
         public void Statement_ListComprehension_IsNotNull_Test()
         {
             string inputStatement = "[x | x <- [1,2,4,3], y <- [0,1,2,9,7,6]]";
@@ -92,6 +139,25 @@ namespace LCT.Tests
             Statement statement = this.GenerateStatement(inputStatement);
 
             Assert.IsNotNull(statement.ListComprehension);
+        }
+
+        [TestMethod]
+        public void Statement_ListComprehension_Statement_ListDefinitions_IsNull_Test()
+        {
+            string inputText = "[x | x <- [1,2,4,3], y <- [0,1,2,9,7,6]]";
+
+            Statement statement = this.GenerateStatement(inputText);
+
+            Assert.IsNull(statement.ListDefinitions);
+        }
+
+        [TestMethod]
+        public void Statement_ListComprehension_Statement_ListShow_IsNull_Test()
+        {
+            string inputText = "[x | x <- [1,2,4,3], y <- [0,1,2,9,7,6]]";
+            Statement statement = this.GenerateStatement(inputText);
+
+            Assert.IsNull(statement.ListsShow);
         }
 
         [TestMethod]
