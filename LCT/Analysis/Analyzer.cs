@@ -8,18 +8,18 @@ using System.Threading.Tasks;
 
 namespace LCT.Analysis
 {
-    internal class Analyzer
+    public class Analyzer
     {
-        private string inputStatement;
+        private string inputCode;
 
-        public Analyzer(string inputStatement)
+        public Analyzer(string inputCode)
         {
-            this.inputStatement = inputStatement;
+            this.inputCode = inputCode;
         }
 
         public IParseTree Analyse()
         {
-            AntlrInputStream textStream = new AntlrInputStream(this.inputStatement);
+            AntlrInputStream textStream = new AntlrInputStream(this.inputCode);
 
             LCTGrammarLexer lexer = new LCTGrammarLexer(textStream);
             CommonTokenStream tokenStream = new CommonTokenStream(lexer);

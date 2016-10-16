@@ -1,4 +1,4 @@
-﻿using LCT.Generation.Preparation.Intermediate;
+﻿using LCT.Generation.Structure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +23,11 @@ namespace LCT.Library
     {
         public LctUniqueList()
             : base(new LctListEqualityComparer())
+        {
+        }
+
+        public LctUniqueList(LctUniqueList list)
+            : base(list, new LctListEqualityComparer())
         {
         }
 

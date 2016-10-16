@@ -54,19 +54,25 @@
     <Compile Include="Analysis\LCTGrammar.g4.parser.cs">
       <DependentUpon>LCTGrammar.g4</DependentUpon>
     </Compile>
-    <Compile Include="ExecutionEnvironment.cs" />
-    <Compile Include="Generation\Generator.cs" />
-    <Compile Include="Generation\Preparation\Intermediate\IntermediateCode.cs" />
-    <Compile Include="Generation\Preparation\Intermediate\LCTList.cs" />
-    <Compile Include="Generation\Preparation\Intermediate\ListComprehension.cs" />
-    <Compile Include="Generation\Preparation\Intermediate\ListsShow.cs" />
-    <Compile Include="Generation\Preparation\Intermediate\Statement.cs" />
-    <Compile Include="Generation\Preparation\Visitors.cs" />
+    <Compile Include="Application\ExecutionContext.cs" />
+    <Compile Include="Application\ExecutionEnvironment.cs" />
+    <Compile Include="Generation\DefaultGenerator.cs" />
+    <Compile Include="Generation\IGenerator.cs" />
+    <Compile Include="Translation\InterpretationContext.cs" />
+    <Compile Include="Generation\Structure\InterpretationUnit.cs" />
+    <Compile Include="Generation\Structure\LCTList.cs" />
+    <Compile Include="Generation\Structure\ListComprehension.cs" />
+    <Compile Include="Generation\Structure\ListsShow.cs" />
+    <Compile Include="Generation\Structure\Statement.cs" />
+    <Compile Include="Generation\Visitors.cs" />
+    <Compile Include="Application\Memory.cs" />
     <Compile Include="Library\DictionaryCombinationsComparer.cs" />
     <Compile Include="Library\Extensions\DictionaryExtensions.cs" />
     <Compile Include="Library\LctUniqueList.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Translation\DefaultInterpreter.cs" />
+    <Compile Include="Translation\IInterpreter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Antlr4 Include="Analysis\LCTGrammar.g4">
@@ -76,6 +82,7 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

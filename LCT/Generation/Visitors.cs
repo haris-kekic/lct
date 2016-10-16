@@ -1,6 +1,6 @@
 ﻿using Antlr4.Runtime.Tree;
 using LCT.Analysis;
-using LCT.Generation.Preparation.Intermediate;
+using LCT.Generation.Structure;
 using LCT.Library;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LCT.Generation.Preparation
+namespace LCT.Generation
 {
     //TODO: Handle Errors
     internal class StatementVisitor : LCTGrammarBaseVisitor<Statement>

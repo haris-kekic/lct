@@ -6,11 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LCT.Generation.Preparation.Intermediate
+namespace LCT.Generation.Structure
 {
-    public class ListComprehension : IntermediateCode
+    public class ListComprehension
     {
         public LctUniqueList ListDefinitions { get; set; }
         public LCTGrammarParser.ListArithExpressionContext ArithmeticExpresssionContext { get; set; }
+
     }
 }

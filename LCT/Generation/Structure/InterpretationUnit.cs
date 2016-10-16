@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LCT.Generation.Preparation.Intermediate
+namespace LCT.Generation.Structure
 {
-    public abstract class IntermediateCode
+    public abstract class InterpretationUnit
     {
     }
 }

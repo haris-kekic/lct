@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LCT.Generation.Preparation.Intermediate
+namespace LCT.Generation.Structure
 {
     /// <summary>
     /// To avoid naming conflicts with System.Collections.Generic.List
     /// </summary>
-    public class LCTList : IntermediateCode
+    public class LCTList
     {
         public LCTList()
         {

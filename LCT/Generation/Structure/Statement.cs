@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LCT.Generation.Preparation.Intermediate
+namespace LCT.Generation.Structure
 {
-    public class Statement : IntermediateCode
+    public class Statement : InterpretationUnit
     {
         public ListsShow ListsShow { get; set; }
 

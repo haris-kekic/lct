@@ -27,8 +27,10 @@ namespace LCT
                 exitEvent.Set();
             };
 
+            ExececutionEnvironment<string> execEnvironment = new DefaultExececutionEnvironment();
+            
             Console.WriteLine("Welcome to LCT (Exit with Ctrl+C)");
-            ExecEnvironment execEnvironment = new ConsoleExecEnvironment();
+            
             do
             {
                 Console.WriteLine();
@@ -40,7 +42,12 @@ namespace LCT
                     break;
                 }
 
-                execEnvironment.Execute(inputStatement);
+                ///As this is a console app and we want the output to be textual
+                Application.ExecutionContext<string> context = new Application.ExecutionContext<string>(inputStatement);
+                execEnvironment.Execute(context);
+
+                Console.WriteLine(context.Output);
+
             } while (true);
 
             exitEvent.WaitOne();
