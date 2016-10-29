@@ -26,6 +26,8 @@ namespace LCT.Application
             interpreter.Interpret(interpretationContext);
 
             context.Output = interpretationContext.Output;
+
+            
         }
     }
 }

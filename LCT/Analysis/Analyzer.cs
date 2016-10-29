@@ -24,6 +24,9 @@ namespace LCT.Analysis
             LCTGrammarLexer lexer = new LCTGrammarLexer(textStream);
             CommonTokenStream tokenStream = new CommonTokenStream(lexer);
             LCTGrammarParser parser = new LCTGrammarParser(tokenStream);
+
+            parser.AddErrorListener(new VerboseListener());
+
             return parser.statement();
         }
     }

@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Analysis\Analyzer.cs" />
+    <Compile Include="Analysis\ErrorListeners.cs" />
     <Compile Include="Analysis\LCTGrammar.g4.lexer.cs">
       <DependentUpon>LCTGrammar.g4</DependentUpon>
     </Compile>
