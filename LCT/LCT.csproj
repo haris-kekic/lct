@@ -54,8 +54,9 @@
     <Compile Include="Analysis\LCTGrammar.g4.parser.cs">
       <DependentUpon>LCTGrammar.g4</DependentUpon>
     </Compile>
-    <Compile Include="Application\ExecutionContext.cs" />
+    <Compile Include="Application\DefaultExecutionEnvironment.cs" />
     <Compile Include="Application\ExecutionEnvironment.cs" />
+    <Compile Include="Application\ExecutionContext.cs" />
     <Compile Include="Generation\DefaultGenerator.cs" />
     <Compile Include="Generation\IGenerator.cs" />
     <Compile Include="Translation\InterpretationContext.cs" />

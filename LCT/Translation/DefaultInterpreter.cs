@@ -84,7 +84,7 @@ namespace LCT.Translation
             return outputBuilder.ToString();
         }
 
-         protected virtual string OutputListElements(IEnumerable<object> elements)
+         protected string OutputListElements(IEnumerable<object> elements)
         {
             StringBuilder outputBuilder = new StringBuilder();
 

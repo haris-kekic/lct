@@ -29,7 +29,7 @@ namespace LCT.Tests
         public void Statement_ListComprehension_MultipleListsCalculation_Output_Test()
         {
             string inputText = "[x*y | x <- [1,2,3], y <- [1,2,3]]";
-            DefaultExececutionEnvironment environment = new DefaultExececutionEnvironment();
+            Application.DefaultExecutionEnvironment environment = new Application.DefaultExecutionEnvironment();
             InterpretationContext<string> interpretationContext = new InterpretationContext<string>(environment, this.GenerateStatement(inputText));
             IInterpreter<string> interpreter = new DefaultInterpreter();
             interpreter.Interpret(interpretationContext);
@@ -41,7 +41,7 @@ namespace LCT.Tests
         public void Statement_ListComprehension_SingleList_Output_Test()
         {
             string inputText = "[x | x <- [1,2,3]]";
-            DefaultExececutionEnvironment environment = new DefaultExececutionEnvironment();
+            Application.DefaultExecutionEnvironment environment = new Application.DefaultExecutionEnvironment();
             InterpretationContext<string> interpretationContext = new InterpretationContext<string>(environment, this.GenerateStatement(inputText));
             IInterpreter<string> interpreter = new DefaultInterpreter();
             interpreter.Interpret(interpretationContext);

@@ -17,7 +17,7 @@ namespace LCT.Tests
         {
             string inputStatement = "def first <- [55,33,44,1,2,66,9,87], second <- [0,1,2,9,8]";
 
-            ExececutionEnvironment<string> execEnvironment = new DefaultExececutionEnvironment();
+            Application.ExecutionEnvironment<string> execEnvironment = new Application.DefaultExecutionEnvironment();
             Application.ExecutionContext<string> context = new Application.ExecutionContext<string>(inputStatement);
             execEnvironment.Execute(context);
 
@@ -29,7 +29,7 @@ namespace LCT.Tests
         {
             string inputStatement = "def first <- [55,33,44,1,2,66,9,87], second <- [0,1,2,9,8]";
 
-            ExececutionEnvironment<string> execEnvironment = new DefaultExececutionEnvironment();
+            Application.ExecutionEnvironment<string> execEnvironment = new Application.DefaultExecutionEnvironment();
             Application.ExecutionContext<string> context = new Application.ExecutionContext<string>(inputStatement);
             execEnvironment.Execute(context);
 
@@ -47,7 +47,7 @@ namespace LCT.Tests
         {
             string inputStatement = "def first <- [55,33,44,1,2,66,9,87], first <- [0,1,2,9,8]";
 
-            ExececutionEnvironment<string> execEnvironment = new DefaultExececutionEnvironment();
+            Application.ExecutionEnvironment<string> execEnvironment = new Application.DefaultExecutionEnvironment();
             Application.ExecutionContext<string> context = new Application.ExecutionContext<string>(inputStatement);
             execEnvironment.Execute(context);
 
@@ -59,7 +59,7 @@ namespace LCT.Tests
         {
             string inputStatement = "def first <- [55,33,44,1,2,66,9,87], first <- [0,1,2,9,8]";
 
-            ExececutionEnvironment<string> execEnvironment = new DefaultExececutionEnvironment();
+            Application.ExecutionEnvironment<string> execEnvironment = new Application.DefaultExecutionEnvironment();
             Application.ExecutionContext<string> context = new Application.ExecutionContext<string>(inputStatement);
             execEnvironment.Execute(context);
 
@@ -73,8 +73,7 @@ namespace LCT.Tests
         {
             string inputStatement = "def first <- [55,33,44,1,2,66,9,87]";
 
-            ExececutionEnvironment<string> execEnvironment = new DefaultExececutionEnvironment();
-
+            Application.ExecutionEnvironment<string> execEnvironment = new Application.DefaultExecutionEnvironment();
             Application.ExecutionContext<string> context = new Application.ExecutionContext<string>(inputStatement);
             execEnvironment.Execute(context);
 

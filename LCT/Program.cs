@@ -27,7 +27,7 @@ namespace LCT
                 exitEvent.Set();
             };
 
-            ExececutionEnvironment<string> execEnvironment = new DefaultExececutionEnvironment();
+            Application.ExecutionEnvironment<string> execEnvironment = new Application.DefaultExecutionEnvironment();
             
             Console.WriteLine("Welcome to LCT (Exit with Ctrl+C)");
             
