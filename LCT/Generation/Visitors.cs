@@ -42,7 +42,45 @@ namespace LCT.Generation
             ListComprehension comprehension = new ListComprehension();
             comprehension.ListDefinitions = new ListDefinitionsVisitor().Visit(context.listDefinitions());
             comprehension.ArithmeticExpresssionContext = context.listArithExpression();
+            comprehension.LogicOperations = new LogicExpressionVisitor().Visit(context.listLogicExpression());
+
             return comprehension;
+        }
+    }
+
+    public class LogicExpressionVisitor : LCTGrammarBaseVisitor<List<LogicOperation>>
+    {
+        public override List<LogicOperation> VisitListLogicExpression(LCTGrammarParser.ListLogicExpressionContext context)
+        {
+            List<LogicOperation> logicOperations = new List<LogicOperation>();
+            foreach(var item in context.logicOperation())
+            {
+                logicOperations.Add(new LogicOperationVisitor().Visit(item));
+            }
+            return logicOperations;
+        }
+    }
+
+    public class LogicOperationVisitor : LCTGrammarBaseVisitor<LogicOperation>
+    {
+        public override LogicOperation VisitLogicOperation(LCTGrammarParser.LogicOperationContext context)
+        {
+            LogicOperation logicOperation = new LogicOperation();
+            logicOperation.ListName = context.IDENTIFIER().GetText();
+
+            decimal value = 0m;
+            if (decimal.TryParse(context.NUMBER().GetText(), out value))
+            { 
+                logicOperation.Value = value;
+            }
+
+            logicOperation.OperationType = logicOperation.OperationType == LogicOperation.OperationTypeEnum.Undefined && context.EQ() != null ? LogicOperation.OperationTypeEnum.Equal : logicOperation.OperationType;
+            logicOperation.OperationType = logicOperation.OperationType == LogicOperation.OperationTypeEnum.Undefined && context.GT() != null ? LogicOperation.OperationTypeEnum.GreaterThen : logicOperation.OperationType;
+            logicOperation.OperationType = logicOperation.OperationType == LogicOperation.OperationTypeEnum.Undefined && context.GTE() != null ? LogicOperation.OperationTypeEnum.GreaterThenEqual : logicOperation.OperationType;
+            logicOperation.OperationType = logicOperation.OperationType == LogicOperation.OperationTypeEnum.Undefined && context.LT() != null ? LogicOperation.OperationTypeEnum.LowerThen : logicOperation.OperationType;
+            logicOperation.OperationType = logicOperation.OperationType == LogicOperation.OperationTypeEnum.Undefined && context.LTE() != null ? LogicOperation.OperationTypeEnum.LowerThenEqual : logicOperation.OperationType;
+
+            return logicOperation;
         }
     }
 

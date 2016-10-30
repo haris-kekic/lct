@@ -12,7 +12,6 @@ namespace LCT.Generation.Structure
     {
         public LctUniqueList ListDefinitions { get; set; }
         public LCTGrammarParser.ListArithExpressionContext ArithmeticExpresssionContext { get; set; }
-
-        //TO DO: List Rules
+        public List<LogicOperation> LogicOperations { get; set; }
     }
 }

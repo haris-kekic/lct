@@ -50,6 +50,8 @@ namespace LCT.Translation
 
                         this.ResolveListReferencesFromInMemoryDefined(appMemory, statement.ListComprehension.ListDefinitions);
 
+                        //TODO: Apply logic operations and conditions
+
                         List<Dictionary<string, object>> combinations = statement.ListComprehension.ListDefinitions.GenerateListElementCombinations();
                         foreach (var combination in combinations)
                         {

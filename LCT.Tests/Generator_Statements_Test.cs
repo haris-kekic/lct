@@ -190,5 +190,89 @@ namespace LCT.Tests
 
             Assert.IsNotNull(statement.ListComprehension.ArithmeticExpresssionContext);
         }
+
+        [TestMethod]
+        public void Statement_ListComprehension_LogicOperation_IsNotNull_Test()
+        {
+            string inputStatement = "[x | x <- [1,2,4,3], y <- [0,1,2,9,7,6], x < 5]";
+
+            Statement statement = this.GenerateStatement(inputStatement);
+
+            Assert.IsNotNull(statement.ListComprehension.LogicOperations);
+        }
+
+        [TestMethod]
+        public void Statement_ListComprehension_LogicOperation_Single_Content_Test()
+        {
+            string inputStatement = "[x | x <- [1,2,4,3], y <- [0,1,2,9,7,6], x < 5]";
+
+            Statement statement = this.GenerateStatement(inputStatement);
+
+            Assert.AreEqual("x", statement.ListComprehension.LogicOperations[0].ListName);
+            Assert.AreEqual(LogicOperation.OperationTypeEnum.LowerThen, statement.ListComprehension.LogicOperations[0].OperationType);
+            Assert.AreEqual(5, statement.ListComprehension.LogicOperations[0].Value);
+        }
+
+        [TestMethod]
+        public void Statement_ListComprehension_LogicOperation_Multiple_Content_Test()
+        {
+            string inputStatement = "[x | x <- [1,2,4,3], y <- [0,1,2,9,7,6], x < 5, y <= 10]";
+
+            Statement statement = this.GenerateStatement(inputStatement);
+
+            Assert.AreEqual("y", statement.ListComprehension.LogicOperations[1].ListName);
+            Assert.AreEqual(LogicOperation.OperationTypeEnum.LowerThenEqual, statement.ListComprehension.LogicOperations[1].OperationType);
+            Assert.AreEqual(10, statement.ListComprehension.LogicOperations[1].Value);
+        }
+
+        [TestMethod]
+        public void Statement_ListComprehension_LogicOperation_OperationType_Equal_Test()
+        {
+            string inputStatement = "[x | x <- [1,2,4,3], y <- [0,1,2,9,7,6], x = 5]";
+
+            Statement statement = this.GenerateStatement(inputStatement);
+
+            Assert.AreEqual(LogicOperation.OperationTypeEnum.Equal, statement.ListComprehension.LogicOperations[0].OperationType);
+        }
+
+        [TestMethod]
+        public void Statement_ListComprehension_LogicOperation_OperationType_LowerThen_Test()
+        {
+            string inputStatement = "[x | x <- [1,2,4,3], y <- [0,1,2,9,7,6], x < 5]";
+
+            Statement statement = this.GenerateStatement(inputStatement);
+
+            Assert.AreEqual(LogicOperation.OperationTypeEnum.LowerThen, statement.ListComprehension.LogicOperations[0].OperationType);
+        }
+
+        [TestMethod]
+        public void Statement_ListComprehension_LogicOperation_OperationType_LowerThenEqual_Test()
+        {
+            string inputStatement = "[x | x <- [1,2,4,3], y <- [0,1,2,9,7,6], x <= 5]";
+
+            Statement statement = this.GenerateStatement(inputStatement);
+
+            Assert.AreEqual(LogicOperation.OperationTypeEnum.LowerThenEqual, statement.ListComprehension.LogicOperations[0].OperationType);
+        }
+
+        [TestMethod]
+        public void Statement_ListComprehension_LogicOperation_OperationType_GreaterThen_Test()
+        {
+            string inputStatement = "[x | x <- [1,2,4,3], y <- [0,1,2,9,7,6], x > 5]";
+
+            Statement statement = this.GenerateStatement(inputStatement);
+
+            Assert.AreEqual(LogicOperation.OperationTypeEnum.GreaterThen, statement.ListComprehension.LogicOperations[0].OperationType);
+        }
+
+        [TestMethod]
+        public void Statement_ListComprehension_LogicOperation_OperationType_GreaterThenEqual_Test()
+        {
+            string inputStatement = "[x | x <- [1,2,4,3], y <- [0,1,2,9,7,6], x >= 5]";
+
+            Statement statement = this.GenerateStatement(inputStatement);
+
+            Assert.AreEqual(LogicOperation.OperationTypeEnum.GreaterThenEqual, statement.ListComprehension.LogicOperations[0].OperationType);
+        }
     }
 }

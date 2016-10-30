@@ -15,7 +15,7 @@ listDefinitionsStatement
 
 
 listComprehensionStatement 
-: LIST_BEGIN listArithExpression PIPE listDefinitions  (COMMA listLogicExpression)* LIST_END
+: LIST_BEGIN listArithExpression PIPE listDefinitions listLogicExpression  LIST_END
 ;
 
 listShowStatement 
@@ -26,7 +26,7 @@ listDefinitions : list (COMMA list)*;
 
 listArithExpression : arithExpression;
 
-listLogicExpression : logicExpression;
+listLogicExpression : (COMMA logicOperation)*;
 
 arithExpression : arithExpression POW<assoc=right> arithExpression #Power	
 				| arithExpression ( MUL | DIV ) arithExpression			 #MulDiv	    
@@ -36,7 +36,7 @@ arithExpression : arithExpression POW<assoc=right> arithExpression #Power
 				| LP arithExpression RP								     #Par	
 				;
 
-logicExpression : arithExpression ( EQ | GT | GTE | LT | LTE ) arithExpression;
+logicOperation : IDENTIFIER ( EQ | GT | GTE | LT | LTE ) NUMBER;
  
 list
 : IDENTIFIER ELEMENT_OF (listElements | referencedList=IDENTIFIER)
@@ -82,7 +82,7 @@ listAutoList
 
  LT : '<';
 
- LTE : '<';
+ LTE : '<=';
 
  SPAN
  : '..'

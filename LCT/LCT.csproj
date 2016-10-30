@@ -60,6 +60,7 @@
     <Compile Include="Application\ExecutionContext.cs" />
     <Compile Include="Generation\DefaultGenerator.cs" />
     <Compile Include="Generation\IGenerator.cs" />
+    <Compile Include="Generation\Structure\LogicOperation.cs" />
     <Compile Include="Translation\InterpretationContext.cs" />
     <Compile Include="Generation\Structure\InterpretationUnit.cs" />
     <Compile Include="Generation\Structure\LCTList.cs" />
